@@ -1,0 +1,16 @@
+.button { 
+    display: block;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .svg {
+    width: 100%;
+    height: 100%;
+    color: #CC6633;
+  }
+
+  .svg {
+    width: 25px;
+    height: 25px;
+  }
