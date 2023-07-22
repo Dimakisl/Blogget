@@ -6,5 +6,5 @@ export const Logo = () => {
     <a href="#" className={style.link}>
       <img className={style.logo} src={logo} alt="Логотип Blogget" />
     </a>
-  )
-}
+  );
+};
