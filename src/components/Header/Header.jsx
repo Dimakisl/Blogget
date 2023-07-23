@@ -9,13 +9,13 @@ export const Header = () => {
   return (
     <header className={style.header}>
       <Layout>
-          <div className={style.gridContainer}>
+        <div className={style.gridContainer}>
           <Logo />
-          <Heading text='Blogger'/> 
+          <Heading text='Blogger'/>
           <Search />
           <Auth auth={false}/>
-          </div>
+        </div>
       </Layout>
     </header>
-  )
-}
+  );
+};
