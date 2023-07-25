@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import {URL_API} from '../../../api/const';
 
-export const Auth = ({token}) => {
+export const Auth = ({token, delToken}) => {
   const [auth, setAuth] = useState({});
+  const [logoutBtn, setLogoutBtn] = useState(false);
   useEffect(() => {
     console.log(token, 'token222');
     if (!token) return;
@@ -21,6 +22,7 @@ export const Auth = ({token}) => {
         setAuth({name, img});
       }).catch(err => {
         console.log(err);
+        delToken();
         setAuth({});
       });
   }, [token]);
@@ -29,10 +31,13 @@ export const Auth = ({token}) => {
   return (
     <div className={style.container}>
       {auth.name ? (
-        <button>
-          <img className={style.img} src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`}/>
-          <Text>{auth.name}</Text>
-        </button>
+        <>
+          <button onClick={() => setLogoutBtn(true)}>
+            <img className={style.img} src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`}/>
+            <Text>{auth.name}</Text>
+          </button>
+          {logoutBtn && <button className={style.logout} onClick={() => delToken()}>Выйти</button>}
+        </>
       ) : (
         <Text className={style.authLink} As='a' href={urlAuth}>
           <LoginIcon className={style.svg}/>
