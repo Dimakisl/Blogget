@@ -13,7 +13,7 @@ import {Text} from '../../../UI/Text';
 export const Tabs = ({list, setList}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDopdown] = useState(true);
-  const [menu, setMenu] = useState('Меню');
+  const [menu, setMenu] = useState('Главная');
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -39,8 +39,8 @@ export const Tabs = ({list, setList}) => {
     {value: 'Горячие', Icon: HotIcon},
   ].map(assignId);
 
-  const handleClick = id => {
-    setMenu(id);
+  const handleClick = value => {
+    setMenu(value);
   };
 
   return (
