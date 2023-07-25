@@ -1,10 +1,13 @@
 import Layout from '../Layout';
-// import style from './Main.module.css';
+import Tabs from './Tabs';
+import List from './List';
+
 
 export const Main = ({children}) => {
   return (
     <Layout>
-      {children}
+      <Tabs />
+      <List />
     </Layout>
   );
 };
