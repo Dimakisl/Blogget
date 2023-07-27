@@ -3,40 +3,30 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../../../api/const';
+import {useState, useContext} from 'react';
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState({});
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
   const [logoutBtn, setLogoutBtn] = useState(false);
-  useEffect(() => {
-    console.log(token, 'token222');
-    if (!token) return;
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      }
-    }).then(response => response.json())
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      }).catch(err => {
-        console.log(err);
-        delToken();
-        setAuth({});
-      });
-  }, [token]);
+  const {auth, clearAuth} = useContext(authContext);
 
+
+  const logOut = () => {
+    delToken();
+    clearAuth();
+  };
 
   return (
     <div className={style.container}>
       {auth.name ? (
         <>
-          <button onClick={() => setLogoutBtn(true)}>
+          <button onClick={() => setLogoutBtn(!logoutBtn)}>
             <img className={style.img} src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`}/>
             <Text>{auth.name}</Text>
           </button>
-          {logoutBtn && <button className={style.logout} onClick={() => delToken()}>Выйти</button>}
+          {logoutBtn && <button className={style.logout} onClick={() => logOut()}>Выйти</button>}
         </>
       ) : (
         <Text className={style.authLink} As='a' href={urlAuth}>
