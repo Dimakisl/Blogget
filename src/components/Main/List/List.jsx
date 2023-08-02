@@ -4,7 +4,7 @@ import Post from './Post';
 import {postContext} from '../../../context/postContext';
 
 export const List = () => {
-  const {post} = useContext(postContext);
+  const {posts} = useContext(postContext);
 
   // const postsData = [
   //   {
@@ -44,7 +44,7 @@ export const List = () => {
   return (
     <ul className={style.list}>
       {/* {postsData.length && postsData.map(postData => <Post key={postData.id} postData={postData}/>)} */}
-      {post.data ? post.data.children.map(postData => <Post key={postData.data.id} postData={postData}/>) :
+      {posts.data ? posts.data.children.map(postData => <Post key={postData.data.id} postData={postData}/>) :
         null
       }
     </ul>
