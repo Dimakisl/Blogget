@@ -8,6 +8,7 @@ export const usePostBest = () => {
   const {token} = useContext(tokenContext);
   const [post, setPost] = useState([]);
   useEffect(() => {
+    if (!token) return;
     fetch(`https://oauth.reddit.com/best`, {
       method: 'GET',
       headers: {
