@@ -1,16 +1,24 @@
 import Header from './components/Header';
 import Main from './components/Main';
-import {useToken} from './hooks/useToken';
+import {AuthContextProvider} from './context/authContext';
+import {PostContextProvider} from './context/postContext';
+import {TokenContextProvider} from './context/tokenContext';
+// import {useToken} from './hooks/useToken';
 
 
 function App() {
-  const [token, delToken] = useToken('');
+  // const [token, delToken] = useToken('');
+
 
   return (
-    <>
-      <Header token={token} delToken={delToken}/>
-      <Main />
-    </>
+    <TokenContextProvider>
+      <AuthContextProvider>
+        <PostContextProvider >
+          <Header />
+          <Main />
+        </PostContextProvider>
+      </AuthContextProvider>
+    </TokenContextProvider>
   );
 }
 
