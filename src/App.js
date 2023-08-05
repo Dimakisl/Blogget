@@ -3,22 +3,22 @@ import Main from './components/Main';
 import {AuthContextProvider} from './context/authContext';
 import {PostContextProvider} from './context/postContext';
 import {TokenContextProvider} from './context/tokenContext';
-// import {useToken} from './hooks/useToken';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 
 function App() {
-  // const [token, delToken] = useToken('');
-
-
   return (
-    <TokenContextProvider>
-      <AuthContextProvider>
-        <PostContextProvider >
-          <Header />
-          <Main />
-        </PostContextProvider>
-      </AuthContextProvider>
-    </TokenContextProvider>
+    <Provider store={store}>
+      <TokenContextProvider>
+        <AuthContextProvider>
+          <PostContextProvider >
+            <Header />
+            <Main />
+          </PostContextProvider>
+        </AuthContextProvider>
+      </TokenContextProvider>
+    </Provider>
   );
 }
 
