@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import {useState, useContext, useEffect} from 'react';
 import {authContext} from '../../../context/authContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteToken, updateToken} from '../../../store';
+import {deleteToken, updateToken} from '../../../store/tokenReducer';
 
 
 export const Auth = () => {
   const [logoutBtn, setLogoutBtn] = useState(false);
   const {auth, clearAuth} = useContext(authContext);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
   const dispatch = useDispatch();
 
   useEffect(() => {

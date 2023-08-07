@@ -9,7 +9,7 @@ export const postContext = React.createContext({});
 
 export const PostContextProvider = ({children}) => {
   // const {token} = useContext(tokenContext);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
 
   const {posts, getPosts} = usePostBest();
 

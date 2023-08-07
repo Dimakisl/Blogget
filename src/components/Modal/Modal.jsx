@@ -10,7 +10,7 @@ import FormComment from './FormComment';
 import {useSelector} from 'react-redux';
 
 export const Modal = ({closeModal, id}) => {
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
   const overlayRef = useRef(null);
   const {comments, getComments, commentData} = useCommentsData();
   const handleClick = e => {
