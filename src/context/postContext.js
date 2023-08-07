@@ -1,13 +1,15 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {usePostBest} from '../hooks/usePostBest';
-import {tokenContext} from './tokenContext';
+// import {tokenContext} from './tokenContext';
+import {useSelector} from 'react-redux';
 
 
 export const postContext = React.createContext({});
 
 export const PostContextProvider = ({children}) => {
-  const {token} = useContext(tokenContext);
+  // const {token} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
 
   const {posts, getPosts} = usePostBest();
 
