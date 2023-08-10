@@ -4,14 +4,18 @@ import {tokenMiddleware, tokenReducer} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import thunk from 'redux-thunk';
 import {authReducer} from './auth/authReducer';
-import {postReducer} from './post/postReducer';
+import {postBestReducer} from './postBest/postReducer';
+import {commentsDataReducer} from './comment/commentsDataReducer';
+import {commentsReducer} from './comment/commentsReducer';
 
 
 const rootReducer = combineReducers({
   tokenReducer,
   commentReducer,
   auth: authReducer,
-  post: postReducer
+  posts: postBestReducer,
+  comments: commentsReducer,
+  commentsData: commentsDataReducer
 });
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(tokenMiddleware, thunk)));

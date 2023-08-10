@@ -1,33 +1,32 @@
-import {POST_REQUEST, POST_REQUEST_ERROR, POST_REQUEST_SUCCESS} from './action';
+import {COMMENTSDATA_REQUEST, COMMENTSDATA_REQUEST_ERROR, COMMENTSDATA_REQUEST_SUCCESS} from './action';
 
 const initialState = {
   loading: false,
-  posts: {},
+  commentsData: [],
   error: '',
 };
 
-export const postReducer = (state = initialState, action) => {
-  console.log(action.data, 'actionData');
+export const commentsDataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POST_REQUEST:
+    case COMMENTSDATA_REQUEST:
       return {
         ...state,
         loading: true,
         error: ''
       };
-    case POST_REQUEST_SUCCESS:
+    case COMMENTSDATA_REQUEST_SUCCESS:
       return {
         ...state,
         loading: false,
-        posts: action.posts,
+        commentsData: action.comments.data,
         error: ''
       };
-    case POST_REQUEST_ERROR:
+    case COMMENTSDATA_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
-        posts: {}
+        commentsData: []
       };
     default:
       return state;
