@@ -3,16 +3,20 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import PropTypes from 'prop-types';
-import {useState, useContext, useEffect} from 'react';
-import {authContext} from '../../../context/authContext';
+import {useState, useEffect} from 'react';
+// import {authContext} from '../../../context/authContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteToken, updateToken} from '../../../store';
+import {deleteToken, updateToken} from '../../../store/tokenReducer';
+import {useAuth} from '../../../hooks/useAuth';
+import AuthLoader from '../../../UI/AuthLoader';
 
 
 export const Auth = () => {
   const [logoutBtn, setLogoutBtn] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
-  const token = useSelector(state => state.token);
+  // const {auth, clearAuth} = useContext(authContext);
+  // const auth = useSelector(state => state.auth.data);
+  const [auth, loading, clearAuth] = useAuth();
+  const token = useSelector(state => state.tokenReducer.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,13 +27,15 @@ export const Auth = () => {
 
   const logOut = () => {
     dispatch(deleteToken());
+    // clearAuth();
+    // dispatch(authLogout());
     clearAuth();
   };
 
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (<AuthLoader />) : auth.name ? (
         <>
           <button onClick={() => setLogoutBtn(!logoutBtn)}>
             <img className={style.img} src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`}/>

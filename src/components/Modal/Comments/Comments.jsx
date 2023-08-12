@@ -13,7 +13,7 @@ export const Comments = ({comments}) => {
             <br />
           </li>
         );
-      }) : comments?.length === 0 ? <p>Загрузка комментариев...</p> : <p>Нет комментариев</p>
+      }) : comments?.length === 0 || comments !== undefined ? <p>Загрузка комментариев...</p> : <p>Нет комментариев</p>
       }
     </ul>
   );

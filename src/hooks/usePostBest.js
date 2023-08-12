@@ -1,20 +1,18 @@
-import {useState} from 'react';
+// import {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {postBestRequestAsync} from '../store/postBest/action';
+import {useEffect} from 'react';
 
 export const usePostBest = () => {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.tokenReducer.token);
+  const posts = useSelector(state => state.posts.posts.data?.children);
+  const loading = useSelector(state => state.posts.loading);
 
-  const getPosts = (token) => {
-    fetch(`https://oauth.reddit.com/best`, {
-      method: 'GET',
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    }).then(response => {
-      return response.json();
-    })
-      .then(data => {
-        setPosts(data);
-      });
-  };
-  return {posts, getPosts};
+
+  useEffect(() => {
+    dispatch(postBestRequestAsync());
+  }, [token]);
+
+  return [posts, loading];
 };
