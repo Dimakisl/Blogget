@@ -6,7 +6,7 @@ export const Comments = ({comments}) => {
     <ul className={style.list}>
       {comments?.length > 0 ? comments.map(com => {
         return (
-          <li key={com.data.link_id + com.data.created} className="item">
+          com.body && <li key={com.data.link_id + com.data.created} className="item">
             <h3 className={style.author}>{com.data.author}</h3>
             <p className={style.comment}>{com.data.body}</p>
             <DateTime date={com.data.created} />

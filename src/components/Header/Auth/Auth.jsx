@@ -27,8 +27,7 @@ export const Auth = () => {
 
   const logOut = () => {
     dispatch(deleteToken());
-    // clearAuth();
-    // dispatch(authLogout());
+    window.location.replace('http://localhost:3000');
     clearAuth();
   };
 
