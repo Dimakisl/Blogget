@@ -43,8 +43,9 @@ export const List = () => {
 
   return (
     <>
+      {loading ? (<Loader />) : ''}
       <ul className={style.list}>
-        {loading ? (<Loader />) : posts ? posts.map(postData => <Post key={postData.data.id} postData={postData}/>) :
+        {posts ? posts.map(postData => <Post key={postData.data.id + new Date().toDateString()} postData={postData}/>) :
           null
         }
         <li ref={endList} className={style.end}/>

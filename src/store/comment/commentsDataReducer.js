@@ -12,6 +12,7 @@ export const commentsDataReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        commentsData: [],
         error: ''
       };
     case COMMENTSDATA_REQUEST_SUCCESS:

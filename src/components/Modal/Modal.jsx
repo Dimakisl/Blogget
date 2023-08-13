@@ -30,6 +30,8 @@ export const Modal = () => {
     if (!token) {
       return;
     } else {
+      // const token = useSelector(state => state.tokenReducer.token);
+      // if (!id) return;
       dispatch(getCommentsRequestAsync(id));
       dispatch(getCommentDataRequestAsync(id));
     }
@@ -38,7 +40,6 @@ export const Modal = () => {
   const comments = useSelector(state => state.comments?.comments[0]?.data?.children[0]?.data);
   const loading = useSelector(state => state.comments?.loading);
   const error = useSelector(state => state.comments?.error);
-  const commentsData = useSelector(state => state.commentsData?.commentsData[1]?.data?.children);
 
   const {title, author, selftext: markdown} = comments || '';
 
@@ -85,7 +86,7 @@ export const Modal = () => {
           </Markdown>
         </div>
         <p className={style.author}>{author}</p>
-        <Comments comments={commentsData}/>
+        <Comments />
         <FormComment />
         <button className={style.close}>
           <CloseIcon
