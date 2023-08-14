@@ -15,13 +15,13 @@ export const postRequest = () => ({
 
 export const postRequestSuccess = (posts) => ({
   type: POST_BEST_REQUEST_SUCCESS,
-  posts,
+  posts: posts.children,
   after: posts.after
 });
 
 export const postRequestSuccessAfter = (posts) => ({
   type: POST_BEST_REQUEST_SUCCESS_AFTER,
-  posts,
+  posts: posts.children,
   after: posts.after
 });
 
@@ -38,12 +38,10 @@ export const changePage = (page) => ({
 
 export const postBestRequestAsync = (newPage) => (dispatch, getState) => {
   let page = getState().posts.page;
-
   if (newPage) {
     page = newPage;
     dispatch(changePage(page));
   }
-
   const token = getState().tokenReducer.token;
   const after = getState().posts.after;
   const loading = getState().posts.loading;

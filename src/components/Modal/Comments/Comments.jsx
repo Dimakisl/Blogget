@@ -3,7 +3,6 @@ import DateTime from '../../Main/List/Post/DateTime';
 import style from './Comments.module.css';
 
 export const Comments = () => {
-  // console.log(comments)
   const commentsData = useSelector(state => state.commentsData?.commentsData[1]?.data?.children);
   const loading = useSelector(state => state.commentsData?.loading);
   return (

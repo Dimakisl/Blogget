@@ -21,7 +21,7 @@ export const postBestReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.posts.children,
+        posts: action.posts,
         error: '',
         after: action.after,
         isLast: !action.after
@@ -30,9 +30,10 @@ export const postBestReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: [...state.posts, ...action.posts.children],
+        posts: [...state.posts, ...action.posts],
         error: '',
-        after: action.after
+        after: action.after,
+        isLast: !action.after
       };
     case CHANGE_PAGE:
       return {

@@ -12,7 +12,7 @@ import {Outlet, useParams} from 'react-router-dom';
 export const List = () => {
   const posts = useSelector(state => state.posts.posts);
   const loading = useSelector(state => state.posts.loading);
-  const token = useSelector(state => state.tokenReducer.token);
+  // const token = useSelector(state => state.tokenReducer.token);
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
@@ -26,6 +26,7 @@ export const List = () => {
       rootMargin: '100px',
     });
     observer.observe(endList.current);
+
     return () => {
       if (endList.current) {
         observer.unobserve(endList.current);
@@ -37,13 +38,16 @@ export const List = () => {
     dispatch(postBestRequestAsync(page));
   }, [page]);
 
-  useEffect(() => {
-    dispatch(postBestRequestAsync('rising'));
-  }, [token]);
+  // useEffect(() => {
+  //   console.log(page, 'page');
+  //   if (!page) {
+  //     dispatch(postBestRequestAsync('rising'));
+  //   }
+  // }, [token]);
 
   return (
     <>
-      {loading ? (<Loader />) : ''}
+      {loading ? (<Loader />) : null}
       <ul className={style.list}>
         {posts ? posts.map(postData => <Post key={postData.data.id + new Date().toDateString()} postData={postData}/>) :
           null

@@ -21,7 +21,6 @@ export const Modal = () => {
   const handleClick = e => {
     const target = e.target;
     if (target === overlayRef.current || e.key === 'Escape') {
-      // closeModal();
       navigate(`/category/${page}`);
     }
   };
@@ -30,8 +29,6 @@ export const Modal = () => {
     if (!token) {
       return;
     } else {
-      // const token = useSelector(state => state.tokenReducer.token);
-      // if (!id) return;
       dispatch(getCommentsRequestAsync(id));
       dispatch(getCommentDataRequestAsync(id));
     }

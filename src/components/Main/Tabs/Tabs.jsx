@@ -18,7 +18,7 @@ const LIST = [
   {value: 'Горячие', Icon: HotIcon, link: 'hot'},
 ].map(assignId);
 
-export const Tabs = ({list, setList}) => {
+export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDopdown] = useState(true);
   const [menu, setMenu] = useState('Главная');

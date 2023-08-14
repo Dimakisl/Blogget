@@ -22,7 +22,7 @@ export const Main = () => {
     <Layout>
       <Tabs />
       <Routes>
-        <Route path= 'category/:page' element={<List />}>
+        <Route path='/category/:page' element={<List />}>
           <Route path='post/:id' element={<Modal />} />
         </Route>
         <Route path='/' element={<StartPage />}/>
