@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {deleteToken} from '../tokenReducer';
+import {createAsyncThunk} from '@reduxjs/toolkit';
 
 export const POST_BEST_REQUEST = 'POST_BEST_REQUEST';
 export const POST_BEST_REQUEST_SUCCESS = 'POST_BEST_REQUEST_SUCCESS';
@@ -35,8 +36,47 @@ export const changePage = (page) => ({
   page
 });
 
+export const postBestRequestAsync = createAsyncThunk('posts/fetch', (newPage, {getState}) => {
+  let page = getState().posts.page;
+  if (newPage) {
+    page = newPage;
+    // dispatch(changePage(page));
+  }
+  console.log(page, 'page');
+  const token = getState().tokenReducer.token;
+  const after = getState().posts.after;
+  const loading = getState().posts.loading;
+  // const isLast = getState().posts.isLast;
 
-export const postBestRequestAsync = (newPage) => (dispatch, getState) => {
+
+  if (!token || loading) return;
+  return axios(`https://oauth.reddit.com/${page}?limit=10&${after ? `after=${after}` : ''}`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    }
+  })
+    .then(({data}) => {
+      console.log(data.data.children, 'data');
+      // return data.data.children;
+      return data.data;
+      // if (after) {
+      //   // dispatch(postRequestSuccessAfter(data.data));
+      //   console.log(data, 'data');
+      //   return data;
+      // } else {
+      //   return data;
+      //   // dispatch(postRequestSuccess(data.data));
+      // }
+    }).catch(error => {
+      // console.log(err);
+      // dispatch(deleteToken());
+      // dispatch(postRequestError(err.toString()));
+      return {error: error.toString()};
+    });
+});
+
+
+export const postBestRequestAsync2 = (newPage) => (dispatch, getState) => {
   let page = getState().posts.page;
   if (newPage) {
     page = newPage;
