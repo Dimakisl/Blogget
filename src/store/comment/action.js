@@ -63,7 +63,8 @@ export const getCommentsRequestAsync = (id) => (dispatch, getState) => {
 export const getCommentDataRequestAsync = (id) => (dispatch, getState) => {
   const token = getState().tokenReducer.token;
   dispatch(commentDataRequest());
-  axios(`https://oauth.reddit.com/r/funnysigns/comments/${id}/`, {
+  // axios(`https://oauth.reddit.com/r/funnysigns/comments/${id}/`, {
+  axios(`https://oauth.reddit.com/comments/${id}`, {
 
     method: 'GET',
     headers: {

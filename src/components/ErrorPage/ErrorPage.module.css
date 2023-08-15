@@ -1,0 +1,12 @@
+.center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.paragraph {
+    padding: 15px;
+    color: red;
+}

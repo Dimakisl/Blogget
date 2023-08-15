@@ -9,16 +9,19 @@ import FormComment from './FormComment';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCommentDataRequestAsync, getCommentsRequestAsync} from '../../store/comment/action';
 import Loader from '../../UI/Loader';
+import {useNavigate, useParams} from 'react-router-dom';
 
-export const Modal = ({closeModal, id}) => {
+export const Modal = () => {
   const token = useSelector(state => state.tokenReducer.token);
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const overlayRef = useRef(null);
 
   const handleClick = e => {
     const target = e.target;
     if (target === overlayRef.current || e.key === 'Escape') {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
@@ -34,7 +37,6 @@ export const Modal = ({closeModal, id}) => {
   const comments = useSelector(state => state.comments?.comments[0]?.data?.children[0]?.data);
   const loading = useSelector(state => state.comments?.loading);
   const error = useSelector(state => state.comments?.error);
-  const commentsData = useSelector(state => state.commentsData?.commentsData[1]?.data?.children);
 
   const {title, author, selftext: markdown} = comments || '';
 
@@ -50,18 +52,21 @@ export const Modal = ({closeModal, id}) => {
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {loading && <div style={{
-          position: 'fixed',
-          top: '0',
-          bottom: '0',
-          left: '0',
-          right: '0',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-          backgroundColor: 'rgba(0,0,0,0.6)',
-        }}><Loader /></div>}
+        {loading &&
+        <div
+          style={{
+            position: 'fixed',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            right: '0',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.6)',
+          }}
+        ><Loader /></div>}
         {error && <p style={{marginTop: '10px', marginBottom: '10px', color: 'red'}}>Ошибка загрузки статьи</p>}
         <h2 className={style.title}>{title}</h2>
         <div className={style.content}>
@@ -78,10 +83,12 @@ export const Modal = ({closeModal, id}) => {
           </Markdown>
         </div>
         <p className={style.author}>{author}</p>
-        <Comments comments={commentsData}/>
+        <Comments />
         <FormComment />
         <button className={style.close}>
-          <CloseIcon onClick={() => closeModal()}/>
+          <CloseIcon
+            onClick={() => navigate(`/category/${page}`) }
+          />
         </button>
       </div>
     </div>,
