@@ -1,10 +1,12 @@
 import axios from 'axios';
+// import {commentsSlice} from './commentsSlice';
+import {createAsyncThunk} from '@reduxjs/toolkit';
 // import {useSelector} from 'react-redux';
 // import {deleteToken} from '../tokenReducer';
 
-export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
-export const COMMENTS_REQUEST_SUCCESS = 'COMMENTS_REQUEST_SUCCESS';
-export const COMMENTS_REQUEST_ERROR = 'COMMENTS_REQUEST_ERROR';
+// export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
+// export const COMMENTS_REQUEST_SUCCESS = 'COMMENTS_REQUEST_SUCCESS';
+// export const COMMENTS_REQUEST_ERROR = 'COMMENTS_REQUEST_ERROR';
 
 
 //комментарии
@@ -13,19 +15,19 @@ export const COMMENTSDATA_REQUEST_SUCCESS = 'COMMENTSDATA_REQUEST_SUCCESS';
 export const COMMENTSDATA_REQUEST_ERROR = 'COMMENTSDATA_REQUEST_ERROR';
 
 
-export const commentRequest = () => ({
-  type: COMMENTS_REQUEST,
-});
+// export const commentRequest = () => ({
+//   type: COMMENTS_REQUEST,
+// });
 
-export const commentRequestSuccess = (comments) => ({
-  type: COMMENTS_REQUEST_SUCCESS,
-  comments
-});
+// export const commentRequestSuccess = (comments) => ({
+//   type: COMMENTS_REQUEST_SUCCESS,
+//   comments
+// });
 
-export const commentRequestError = (error) => ({
-  type: COMMENTS_REQUEST_ERROR,
-  error
-});
+// export const commentRequestError = (error) => ({
+//   type: COMMENTS_REQUEST_ERROR,
+//   error
+// });
 //комментарии
 export const commentDataRequest = () => ({
   type: COMMENTSDATA_REQUEST,
@@ -43,9 +45,10 @@ export const commentDataRequestError = (error) => ({
 
 
 //comments - текст статьи getComments
-export const getCommentsRequestAsync = (id) => (dispatch, getState) => {
+export const getCommentsRequestAsync2 = (id) => (dispatch, getState) => {
   const token = getState().tokenReducer.token;
-  dispatch(commentRequest());
+  // dispatch(commentRequest());
+  // dispatch(commentsSlice.actions.commentRequest());
   axios(`https://oauth.reddit.com/comments/${id}`, {
     method: 'GET',
     headers: {
@@ -53,12 +56,47 @@ export const getCommentsRequestAsync = (id) => (dispatch, getState) => {
     },
   })
     .then(data => {
-      dispatch(commentRequestSuccess(data));
+      // dispatch(commentRequestSuccess(data));
+      // dispatch(commentsSlice.actions.commentRequestSuccess(data));
     })
-    .catch(err => {
-      dispatch(commentRequestError(err.toString()));
+    .catch((error) => {
+      // dispatch(commentRequestError(err.toString()));
+      // dispatch.commentsSlice.actions.commentDataRequestError({error: error.toString()});
     });
 };
+
+export const getCommentsRequestAsync = createAsyncThunk('comments/fetch', (id, {getState}) => {
+  const token = getState().tokenReducer.token;
+  console.log(token, 'token');
+  if (!token) return;
+  return axios(`https://oauth.reddit.com/comments/${id}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `bearer ${token}`,
+    }
+  }).then(
+    ({
+      data: [
+        {
+          data: {
+            children: [{data: post}],
+          },
+        },
+        {
+          data: {children},
+        }
+      ],
+    }) => {
+      const comments = children.map((item) => item.data);
+      return {post, comments};
+    }
+  )
+    .catch((error) => {
+    // dispatch(commentRequestError(err.toString()));
+    // dispatch.commentsSlice.actions.commentDataRequestError({error: error.toString()});
+      return {error: error.toString()};
+    });
+});
 //commentData - комментарии getCommentData
 export const getCommentDataRequestAsync = (id) => (dispatch, getState) => {
   const token = getState().tokenReducer.token;
