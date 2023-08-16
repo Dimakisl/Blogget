@@ -37,7 +37,6 @@ export const Modal = () => {
 
   // const comments = useSelector(state => state.comments?.comments?.data?.data?.children[0]);
   const comments = useSelector(state => state.comments.comments);
-  console.log(comments, 'comments-1');
   const loading = useSelector(state => state.comments?.loading);
   const error = useSelector(state => state.comments?.error);
 
