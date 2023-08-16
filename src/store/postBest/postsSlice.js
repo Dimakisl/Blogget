@@ -39,22 +39,15 @@ export const postsSlice = createSlice({
     [postBestRequestAfterAsync.pending.type]: (state) => {
       state.loading = true;
       state.error = '';
-      // state.posts = [];
-      // state.page = '';
     },
     [postBestRequestAfterAsync.fulfilled.type]: (state, action) => {
       state.loading = false;
-      // state.posts = [...state.posts, ...action.payload?.data?.children];
       state.posts = [...state.posts].concat(action.payload?.data?.children);
       state.error = '';
-      // state.after = action.payload?.data?.after;
-      // state.isLast = !action.payload?.data?.after;
-      // state.page = action.payload?.newPage;
     },
     [postBestRequestAfterAsync.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error;
-      // state.posts = [];
     },
 
   }
