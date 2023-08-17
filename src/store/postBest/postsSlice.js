@@ -43,7 +43,7 @@ export const postsSlice = createSlice({
     },
     [postBestRequestAfterAsync.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.posts = state.posts ? [].concat(...state.posts, action.payload?.data?.children) : [], //[...state.posts, ...action.payload?.data?.children], //[...state.posts].concat(action.payload?.data?.children);
+      state.posts = state.posts ? [].concat(...state.posts, action.payload?.data?.children) : [],
       state.error = '';
       state.after = action?.payload?.data?.after;
     },
