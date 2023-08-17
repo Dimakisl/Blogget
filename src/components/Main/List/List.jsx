@@ -6,14 +6,16 @@ import Loader from '../../../UI/Loader';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useRef} from 'react';
 import {changePage, postBestRequestAfterAsync, postBestRequestAsync} from '../../../store/postBest/action';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet, useNavigate, useParams} from 'react-router-dom';
 
 export const List = () => {
   const posts = useSelector(state => state.posts.posts);
   const loading = useSelector(state => state.posts.loading);
+  const token = useSelector(state => state.tokenReducer.token);
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -31,6 +33,12 @@ export const List = () => {
       }
     };
   }, [endList.current]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/');
+    }
+  }, [token]);
 
   useEffect(() => {
     dispatch(postBestRequestAsync(page));

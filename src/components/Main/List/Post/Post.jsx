@@ -11,7 +11,7 @@ export const Post = ({postData}) => {
   return (
     postData?.data && <li className={style.post}>
       <img className={style.img} src={thumbnail !== 'self' ? thumbnail : notphoto} alt={title} />
-      <Content title={title} author={author} markdown={markdown} id={id}/>
+      <Content title={title ? title : ''} author={author ? author : ''} markdown={markdown ? markdown : ''} id={id}/>
       <Rating ups={ups}/>
       <DateTime date={created ? created : new Date()}/>
       <DeleteBtn />
