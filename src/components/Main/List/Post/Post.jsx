@@ -7,13 +7,13 @@ import DeleteBtn from './DeleteBtn';
 import {Content} from './Content/Content';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, thumbnail, created, selftext: markdown, id} = postData.data;
+  const {title, author, ups, thumbnail, created, selftext: markdown, id} = postData?.data || [];
   return (
-    <li className={style.post}>
+    postData?.data && <li className={style.post}>
       <img className={style.img} src={thumbnail !== 'self' ? thumbnail : notphoto} alt={title} />
-      <Content title={title} author={author} markdown={markdown} id={id}/>
+      <Content title={title ? title : ''} author={author ? author : ''} markdown={markdown ? markdown : ''} id={id}/>
       <Rating ups={ups}/>
-      <DateTime date={created}/>
+      <DateTime date={created ? created : new Date()}/>
       <DeleteBtn />
     </li>
   );

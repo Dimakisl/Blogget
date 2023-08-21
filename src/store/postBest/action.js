@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {deleteToken} from '../tokenReducer';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+// import {useParams} from 'react-router-dom';
 
 export const POST_BEST_REQUEST = 'POST_BEST_REQUEST';
 export const POST_BEST_REQUEST_SUCCESS = 'POST_BEST_REQUEST_SUCCESS';
@@ -35,8 +37,57 @@ export const changePage = (page) => ({
   page
 });
 
+export const postBestRequestAsync = createAsyncThunk('posts/fetch', (newPage, {getState}) => {
+  let page = getState().posts.page;
+  if (newPage) {
+    page = newPage;
+  }
+  const token = getState().tokenReducer.token;
+  const loading = getState().posts.loading;
 
-export const postBestRequestAsync = (newPage) => (dispatch, getState) => {
+
+  if (!token || !loading || !page) return;
+  return axios(`https://oauth.reddit.com/${page}?limit=10`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    }
+  })
+    .then(({data}) => {
+      return {data: data.data, newPage};
+    }).catch(error => {
+      return {error: error.toString()};
+    });
+});
+
+export const postBestRequestAfterAsync = createAsyncThunk('posts/fetch/after', (newPage, {getState}) => {
+  let page = getState().posts.page;
+  if (newPage) {
+    page = newPage;
+  }
+  const token = getState().tokenReducer.token;
+  const after = getState().posts.after;
+  const loading = getState().posts.loading;
+  const isLast = getState().posts.isLast;
+
+
+  if (!token || !loading || !page || isLast) return;
+  return axios(`https://oauth.reddit.com/${page}?limit=10&${after ? `after=${after}` : ''}`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    }
+  })
+    .then(({data}) => {
+      return {data: data.data};
+    }).catch(error => {
+      // console.log(err);
+      // dispatch(deleteToken());
+      // dispatch(postRequestError(err.toString()));
+      return {error: error.toString()};
+    });
+});
+
+
+export const postBestRequestAsync2 = (newPage) => (dispatch, getState) => {
   let page = getState().posts.page;
   if (newPage) {
     page = newPage;
