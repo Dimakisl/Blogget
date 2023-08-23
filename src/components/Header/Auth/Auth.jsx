@@ -27,7 +27,7 @@ export const Auth = () => {
 
   const logOut = () => {
     dispatch(deleteToken());
-    window.location.replace('http://localhost:3000');
+    window.location.replace('https://blogget-nine.vercel.app/');
     clearAuth();
   };
 
